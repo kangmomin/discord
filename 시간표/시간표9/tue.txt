@@ -1,0 +1,24 @@
+1 : 영어
+zoom : https://zoom.us/j/92904005652?pwd=WFZRZWYyeDBxeGVvcnlMQ2M5Q0FtQT09 929 0400 5652/0309
+classroom : https://classroom.google.com/u/1/c/MjgzMDA3MzQxMzM0
+카훗 : https://create.kahoot.it/share/test/49524e80-03b2-44b9-a472-ce3bce4cfdda
+
+2 : 수학 
+zoom : https://us04web.zoom.us/j/2149796803 pw : 243480
+classroom : https://classroom.google.com/u/1/c/Mjg0MzgzMzc0MjIz
+
+3 : 정보 
+zoom : https://us04web.zoom.us/j/7583626955?pwd=Q0hBQXRPeklpdmhrc2JpKzg0UU44UT09 758 362 6955/868788
+classroom : https://classroom.google.com/u/1/c/MjkyNTM0MTQ2NTU2
+
+4 : 체육 
+zoom : https://zoom.us/j/98605043636?pwd=V01FVVAxd3h5YXZ1UFc1bm5BemluZz09
+classroom : https://classroom.google.com/u/1/c/Mjg0NDQyNzg0MDcy
+
+5, 6 : 미술 
+zoom : https://zoom.us/j/2467657245?pwd=Qk93OG14bFBudi9LYkVVQlE3TVBhQT09 246 765 7245/1gM53B
+classroom : https://classroom.google.com/u/1/c/MjgzNTIyNzE5Nzk2
+
+7 : 물리 
+zoom : https://us04web.zoom.us/j/2026848469?pwd=TitIVEZHNWdWNzNqdUtHUlBDc0ZCZz09 202 684 8469/05
+classroom : https://classroom.google.com/u/1/c/Mjg0NDI4NTk1NzE4

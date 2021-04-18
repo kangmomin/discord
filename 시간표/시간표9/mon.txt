@@ -1,0 +1,27 @@
+1 : 컴그 
+zoom : https://us04web.zoom.us/j/5762932538 576 293 2538/661016
+classroom : https://classroom.google.com/u/1/c/Mjg0NDQ4NjY0MjAx
+
+2 : 컴그 
+zoom : https://us04web.zoom.us/j/5762932538 576 293 2538/661016
+classroom : https://classroom.google.com/u/1/c/Mjg0NDQ4NjY0MjAx
+
+3 : 프로 
+zoom : https://zoom.us/j/4886153392?pwd=VUNPK2lwRUpmRk1BaU1keTkvOStTdz09 488 615 3392/1212
+classroom : https://classroom.google.com/u/1/c/Mjg0NDEwMjE0MjQ3
+
+4 : 회계 
+zoom : https://zoom.us/j/4937562729?pwd=NFd2RXdiT25uTlUwejZSb0MxUWhQQT09 493 756 2729/940401
+classroom : https://classroom.google.com/u/1/c/Mjc2MjY1MjI2Nzg0
+
+5 : 수학 
+zoom : https://us04web.zoom.us/j/2149796803 pw : 243480
+classroom : https://classroom.google.com/u/1/c/Mjg0MzgzMzc0MjIz
+
+6 : 사회 
+zoom : https://us04web.zoom.us/j/9265847746?pwd=aC9Ya1dMbUdhY2grUkk1SUNUOWhMZz09
+classroom : https://classroom.google.com/u/1/c/Mjg0NDE2NTIzMDcy
+
+7 : 자율 
+zoom : https://zoom.us/j/8365450832?pwd=cUZRcjZGVmd4V3pzQzNTMmlxaDUyUT09 836 545 0832/6MfNMS
+classroom : https://classroom.google.com/u/1/c/Mjg0Mzg3MzE2Nzg4
