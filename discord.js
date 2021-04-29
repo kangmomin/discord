@@ -8,6 +8,7 @@ var data = '', cart = '', songCount = 0, _count = 0, _IsRepeat = 0, botMsg, _con
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
+    _check()
     client.channels.cache.get(`810904006661505074`).send(`bot rebooting complete`)
     .then(__msg => {
         setTimeout(() => {
@@ -22,6 +23,7 @@ function _check() {
 
 function check() {
     setTimeout(() => {
+        console.log('on')
         let date = new Date()
         if(date.getHours() != 1 || date.getHours() != 8) return ''
         let users = JSON.parse(fs.readFileSync(__dirname + "/userInfo/index.json", 'utf-8').toString())
@@ -40,30 +42,7 @@ client.on('message', async (msg) => {
             creshent = '<@528760244407369739>', sys = '<@806131056830316574>', jw = '<@546696761431949314>', dongwon = '<@635802477429522432>',
             jj = '<@630059294863130624>'
         if (isCart === false) {
-            if (msg.content === '$ㅅㅂ' || msg.content === '$수봉' || msg.content === '$tq') {
-                _sending(msg, creshent)
-            } else if (msg.content === '$타카' || msg.content === '$타카라다' ||
-                msg.content === '$ㅌㅋㄹㄷ' || msg.content === '$ㅌㅋ' || msg.content === '$타카 반복') {
-                _sending(msg, takarada)
-            } else if (msg.content == '$동원' || msg.content == '$ㄷㅇ' || msg.content == '$ehddnjs' || msg.content == '$참치'
-                || msg.content == '$ed' || msg.content === '$동원 반복') {
-                _sending(msg, dongwon)
-            } else if (msg.content === '$koldin' || msg.content === '$콜딘' || msg.content === '$모민' || msg.content === '$ㅋㄷ'
-                || msg.content === '$딸기') {
-                _sending(msg, koldin)
-            } else if (msg.content === '$사신' || msg.content === '$ㅅㅅ' || msg.content === '$tt' || msg.content === '$tktls') {
-                _sending(msg, sasin)
-            } else if (msg.content === '$씹덕' || msg.content === '$씹' || msg.content === '$Tlq' || msg.content === '$ㅅㄷ') {
-                msg.channel.send(sys)
-                msg.channel.send(takarada)
-                msg.channel.send(jw)
-            } else if (msg.content === '$유승' || msg.content === '$ㅇㅅ' || msg.content === '$유승 반복') {
-                _sending(msg, sys)
-            } else if (msg.content === '$재완' || msg.content === '$ㅈㅇ' || msg.content === '$재완 반복') {
-                _sending(msg, jw)
-            } else if (msg.content === '$정준' || msg.content === '$ㅈㅈ' || msg.content === '$정준 반복' || msg.content === '$ㅄ' || msg.content === '$병신') {
-                _sending(msg, jj)
-            } else if(msg.content.includes('$시간표')){
+            if(msg.content.includes('$시간표')){
                 fs.readdir('./시간표/', 'utf8', (err, data) => {
                     let i = 0
                     if(msg.content != '$시간표') {
@@ -118,16 +97,6 @@ client.on('message', async (msg) => {
                 _IsRepeat = 0
                 msg.channel.send(`총 ${_count}번 실행됬습니다.`)
                 _count = 0
-            } else if (msg.content === '$시발 좆같은 코딩') {
-                msg.channel.send(`
-    1 : 쓰던방법이 안될거란 개같은 생각에 1시간 ㅄ짓거리
-    2 : 변수쓰다가 썪여서 1시간 공중분해
-    3 : 사신이가 원하는 몇번 반복했는지 적는 기능추가하며 본래 있던 버그 고치는데 테스트하던 그부분만 삭제를 다 안해서 일어난 버그였음. 또 1시간 이상 증발tlqkf
-    4 : 로컬파일 재생 기능 구현중 필요한 파일 다운을 3시간이상 하며 10개의 파일 이상 다운받음 시발 개 좆같은 코딩
-    5 : 폴더 읽기를 해야하는데 파일읽기 쓰고 왜 안되는지 찾고있었음 시발
-    6 : 예제는 전부 end라던데 왜 정답은 finish지 시발
-    7 : 살다살다 콜론(:)을 안붙여서 2시간 낭비한적은 처음이네
-    `)
             } else if (msg.content.includes('$재생')) {
                 if (msg.content.length < 4) {
                     let userMsg = msg
@@ -177,89 +146,15 @@ client.on('message', async (msg) => {
                 console.log(userInfo.name)
                 let users = JSON.parse(fs.readFileSync(__dirname + "/userInfo/index.json", 'utf-8').toString())
                 users[userInfo.name] = userInfo
-                console.log(users)
                 fs.writeFileSync('F:/문서/node.js/discord.js/userInfo/index.json', JSON.stringify(users))
                 
                 selfcheck(users[userInfo.name])
-                    .then(result => console.log('자가진단 성공', result))
+                    .then(result => {
+                        msg.channel.send(userInfo.name + '님의 자가진단이 성공적으로 완료 되었습니다.', result)
+                        msg.delete()
+                    })
                     .catch(err => console.error('오류 발생', err))
             } else if (msg.content === '$ㅋㅌ' || msg.content.includes('$카테고리')) {
-                if(!msg.content.includes('$카테고리')) {
-                    fs.readdir(`F:/song`, 'utf8', (err, data) => {
-                        let list = '카테고리\n';
-                        let i = 0
-                        while (i < data.length) {
-                            list += `${i + 1} : ${data[i]} \n`
-                            i++
-                        }
-                        let userMsg = msg
-                        msg.channel.send(list).then(_msg => {
-                            isCart = true
-                            cartMsg = _msg
-                            userMsg.delete()
-                        })
-                    })
-                } else {
-                    if (isSetting === true) {
-                        if(msg.content.slice(6) !== undefined) {
-                            let msgCount = msg.content.slice(6)
-                            if(msg.content !== '$카테고리') {
-                                msgCount = msg.content.slice(6)
-                            } else {
-                                msgCount = 1
-                            }
-                            let list = ''
-                            let array = new Array()
-                            msg.delete()
-                            fs.readdir(`F:/song/${cart}`, 'utf8', (err, _data) => {
-                                if (msgCount <= Math.ceil(_data.length/15) || msgCount <= 0) {
-                                    let i = 0
-                                    let j = 0
-                                    let count = 0
-                                    while (i < Math.ceil(_data.length/15)) {
-                                        array[i] = new Array()
-                                        while (j < 15) {
-                                            if(_data[count] === undefined) {
-                                                j = 15
-                                            } else {
-                                                array[i][j] = _data[count]
-                                            count++
-                                            j++
-                                            }
-                                        }
-                                        j = 0
-                                        i++
-                                    }
-                                    list += `[${msgCount} / ${array.length}]\n`
-                                    for (f = 0; f < 15; f++) {
-                                        if(array[msgCount - 1][f] !== undefined) {
-                                            list += `${(((msgCount - 1) * 15) + f) + 1} : ${array[msgCount - 1][f]}\n`
-                                        }
-                                    }
-                                    msg.channel.send(list).then(_msg => {
-                                        setTimeout(() => {
-                                            _msg.delete()
-                                        }, 30000)
-                                    })
-                                } else {
-                                    msg.channel.send('카테고리 번호가 너무 크거나 작습니다.').then(_msg => {
-                                        setTimeout(() => {
-                                            msg.delete()
-                                            _msg.delete()
-                                        }, 3000)
-                                    })
-                                }
-                            })
-                        } else {
-                            msg.channel.send('카테고리 번호를 적어주십시오.').then(msg => {
-                                setTimeout(() => {
-                                    msg.delete()
-                                }, 30000)
-                            })
-                        } 
-                    }
-                }
-            } else if (msg.content === '$ㅅㄷㄴㅅ' || msg.content.includes('$test')) {
                 msg.member.voice.channel.join().then(connection => {
                     let dispatcher = connection.play(`F:/song/트위치/진자림 왜에_ 10분 연속듣기.m4a`)
                     dispatcher.on("error", (err) => {
@@ -602,4 +497,4 @@ client.on('uncaughtException', err => {
     })
 })
 
-client.login('');
+client.login('ODExMTc5MDc2NTk2NjYyMjgy.YCubYg.EN9HyuvhfKW-Zx8SIG1hmAjSv-U');
