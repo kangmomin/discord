@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
+const { selfcheck }  = require('selfcheck');
 const fs = require('fs');
 var data = '', cart = '', songCount = 0, _count = 0, _IsRepeat = 0, botMsg, _connection, isSetting = false,
     _channel, percent = '', isCart = false, cartMsg
@@ -15,7 +16,25 @@ client.on('ready', () => {
     })
 });
 
-client.on('message', msg => {
+function _check() {
+    check()
+}
+
+function check() {
+    setTimeout(() => {
+        let date = new Date()
+        if(date.getHours() != 1 || date.getHours() != 8) return ''
+        let users = JSON.parse(fs.readFileSync(__dirname + "/userInfo/index.json", 'utf-8').toString())
+        for (user of users) {
+            selfcheck(users[user])
+                .then(result => console.log('자가진단 성공', result))
+                .catch(err => console.error('오류 발생', err))
+        }
+        _check()
+    }, 3600)
+}
+
+client.on('message', async (msg) => {
     if (!msg.author.bot) {
         let koldin = '<@345062055876755459>', sasin = '<@426006925336117258>', takarada = '<@276171866341769218>',
             creshent = '<@528760244407369739>', sys = '<@806131056830316574>', jw = '<@546696761431949314>', dongwon = '<@635802477429522432>',
@@ -150,6 +169,20 @@ client.on('message', msg => {
                         }
                     })
                 }
+            } else if(msg.content.includes('$자가진단 등록')) {
+                if(msg.content.slice(9).length < 10) return msg.channel.send(`
+{ "name": "실명", "birthday": "생일010101", "school": "학교", "area": "지역", "password": "비밀번호" }
+                `)
+                let userInfo = JSON.parse(msg.content.slice(9).toString())
+                console.log(userInfo.name)
+                let users = JSON.parse(fs.readFileSync(__dirname + "/userInfo/index.json", 'utf-8').toString())
+                users[userInfo.name] = userInfo
+                console.log(users)
+                fs.writeFileSync('F:/문서/node.js/discord.js/userInfo/index.json', JSON.stringify(users))
+                
+                selfcheck(users[userInfo.name])
+                    .then(result => console.log('자가진단 성공', result))
+                    .catch(err => console.error('오류 발생', err))
             } else if (msg.content === '$ㅋㅌ' || msg.content.includes('$카테고리')) {
                 if(!msg.content.includes('$카테고리')) {
                     fs.readdir(`F:/song`, 'utf8', (err, data) => {
