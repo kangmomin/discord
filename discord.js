@@ -8,7 +8,7 @@ var data = '', cart = '', songCount = 0, _count = 0, _IsRepeat = 0, botMsg, _con
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
-    _check()
+    check()
     client.channels.cache.get(`810904006661505074`).send(`bot rebooting complete`)
     .then(__msg => {
         setTimeout(() => {
@@ -17,30 +17,33 @@ client.on('ready', () => {
     })
 });
 
-function _check() {
-    check()
-}
-
-function check() {
-    setTimeout(() => {
-        console.log('on')
+async function check() {
+    setInterval(() => {
         let date = new Date()
-        if(date.getHours() != 1 || date.getHours() != 8) return ''
+        let housrs = date.getHours().toString()
+        let min = date.getMinutes().toString()
+
+        if(
+            min != '0' ||
+            housrs != '1' && 
+            housrs != '8' && 
+            housrs != '7' && 
+            housrs != '9' && 
+            housrs != '10'
+        ) { 
+            return ''
+        }
         let users = JSON.parse(fs.readFileSync(__dirname + "/userInfo/index.json", 'utf-8').toString())
-        for (user of users) {
+        for (user in users) {
             selfcheck(users[user])
                 .then(result => console.log('자가진단 성공', result))
                 .catch(err => console.error('오류 발생', err))
         }
-        _check()
-    }, 3600)
+    }, 60000)
 }
 
 client.on('message', async (msg) => {
     if (!msg.author.bot) {
-        let koldin = '<@345062055876755459>', sasin = '<@426006925336117258>', takarada = '<@276171866341769218>',
-            creshent = '<@528760244407369739>', sys = '<@806131056830316574>', jw = '<@546696761431949314>', dongwon = '<@635802477429522432>',
-            jj = '<@630059294863130624>'
         if (isCart === false) {
             if(msg.content.includes('$시간표')){
                 fs.readdir('./시간표/', 'utf8', (err, data) => {
@@ -497,4 +500,4 @@ client.on('uncaughtException', err => {
     })
 })
 
-client.login('ODExMTc5MDc2NTk2NjYyMjgy.YCubYg.EN9HyuvhfKW-Zx8SIG1hmAjSv-U');
+client.login('');
