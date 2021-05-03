@@ -17,8 +17,8 @@ client.on('ready', () => {
     })
 });
 
-async function check() {
-    setInterval(() => {
+check = () => {
+    setInterval(async () => {
         let date = new Date()
         let housrs = date.getHours().toString()
         let min = date.getMinutes().toString()
@@ -34,11 +34,15 @@ async function check() {
             return ''
         }
         let users = JSON.parse(fs.readFileSync(__dirname + "/userInfo/index.json", 'utf-8').toString())
-        for (user in users) {
-            selfcheck(users[user])
-                .then(result => console.log('자가진단 성공', result))
-                .catch(err => console.error('오류 발생', err))
-        }
+            for (user in users) {
+                console.log(user)
+                await selfcheck(users[user])
+                    .then(result => {
+                        console.log(`${user}님의 자가진단 성공 ${result}`)
+                        client.channels.cache.get(`838480416129286145`).send(`${user}님의 자가진단 성공 ${result}`)
+                    })
+                    .catch(err => console.error('오류 발생', err))
+            }
     }, 60000)
 }
 
@@ -164,6 +168,17 @@ client.on('message', async (msg) => {
                     })
                 })
 
+            } else if(msg.content == '$t') {
+                let users = JSON.parse(fs.readFileSync(__dirname + "/userInfo/index.json", 'utf-8').toString())
+                for (user in users) {
+                    console.log(user)
+                    await selfcheck(users[user])
+                        .then(result => {
+                            console.log(`${user}님의 자가진단 성공 ${result}`)
+                            // client.channels.cache.get(`838480416129286145`).send(`${user}님의 자가진단 성공 ${result}`)
+                        })
+                        .catch(err => console.error('오류 발생', err))
+                }
             } else if (msg.content.includes('$반복')) {
                 if (msg.mentions.members.first().id != '' && msg.mentions.members.first().id != undefined) {
                     let mention = `<@${msg.mentions.members.first().id}>`
@@ -500,4 +515,4 @@ client.on('uncaughtException', err => {
     })
 })
 
-client.login('');
+client.login('ODExMTc5MDc2NTk2NjYyMjgy.YCubYg.WK-Le2hQ21xRSzbQ30gngG1DomQ');
