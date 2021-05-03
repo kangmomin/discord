@@ -7,8 +7,7 @@ var data = '', cart = '', songCount = 0, _count = 0, _IsRepeat = 0, botMsg, _con
 
 
 client.on('ready', () => {
-    console.log(`Logged in as ${client.user.tag}!`);
-    check()
+    console.log(`Logged in as ${client.user.tag}!`)
     client.channels.cache.get(`810904006661505074`).send(`bot rebooting complete`)
     .then(__msg => {
         setTimeout(() => {
@@ -17,34 +16,30 @@ client.on('ready', () => {
     })
 });
 
-check = () => {
-    setInterval(async () => {
-        let date = new Date()
-        let housrs = date.getHours().toString()
-        let min = date.getMinutes().toString()
+setInterval(async () => {
+    let date = new Date()
+    let housrs = date.getHours().toString()
+    let min = date.getMinutes().toString()
 
-        if(
-            min != '0' ||
-            housrs != '1' && 
-            housrs != '8' && 
-            housrs != '7' && 
-            housrs != '9' && 
-            housrs != '10'
-        ) { 
-            return ''
-        }
+    if(
+        min == '0' &&
+        housrs == '1' || 
+        housrs == '8' || 
+        housrs == '7' || 
+        housrs == '9' || 
+        housrs == '10'
+    ) {
         let users = JSON.parse(fs.readFileSync(__dirname + "/userInfo/index.json", 'utf-8').toString())
-            for (user in users) {
-                console.log(user)
-                await selfcheck(users[user])
-                    .then(result => {
-                        console.log(`${user}님의 자가진단 성공 ${result}`)
-                        client.channels.cache.get(`838480416129286145`).send(`${user}님의 자가진단 성공 ${result}`)
-                    })
-                    .catch(err => console.error('오류 발생', err))
-            }
-    }, 60000)
-}
+        for (user in users) {
+            await selfcheck(users[user])
+                .then(() => {
+                    console.log(`${user}님의 자가진단 성공 ${housrs} : ${min}`)
+                    client.channels.cache.get(`838480416129286145`).send(`${user}님의 자가진단 성공 ${housrs} : ${min}`)
+                })
+                .catch(err => console.error('오류 발생', err))
+        }
+    }
+}, 60000)
 
 client.on('message', async (msg) => {
     if (!msg.author.bot) {
@@ -515,4 +510,4 @@ client.on('uncaughtException', err => {
     })
 })
 
-client.login('ODExMTc5MDc2NTk2NjYyMjgy.YCubYg.WK-Le2hQ21xRSzbQ30gngG1DomQ');
+client.login('ODExMTc5MDc2NTk2NjYyMjgy.YCubYg.cG_Js2Ge_imwjLupmNA_Rd9HrMA');
