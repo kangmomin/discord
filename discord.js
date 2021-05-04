@@ -18,23 +18,23 @@ client.on('ready', () => {
 
 setInterval(async () => {
     let date = new Date()
-    let housrs = date.getHours().toString()
+    let hours = date.getHours().toString()
     let min = date.getMinutes().toString()
 
     if(
         min == '0' &&
-        housrs == '1' || 
-        housrs == '8' || 
-        housrs == '7' || 
-        housrs == '9' || 
-        housrs == '10'
+        (
+        hours == '1' || 
+        hours == '8' || 
+        hours == '7'
+        )
     ) {
         let users = JSON.parse(fs.readFileSync(__dirname + "/userInfo/index.json", 'utf-8').toString())
         for (user in users) {
             await selfcheck(users[user])
                 .then(() => {
-                    console.log(`${user}님의 자가진단 성공 ${housrs} : ${min}`)
-                    client.channels.cache.get(`838480416129286145`).send(`${user}님의 자가진단 성공 ${housrs} : ${min}`)
+                    console.log(`${user}님의 자가진단 성공 ${hours} : ${min}`)
+                    client.channels.cache.get(`838480416129286145`).send(`${user}님의 자가진단 성공 ${hours} : ${min}`)
                 })
                 .catch(err => console.error('오류 발생', err))
         }
@@ -510,4 +510,4 @@ client.on('uncaughtException', err => {
     })
 })
 
-client.login('ODExMTc5MDc2NTk2NjYyMjgy.YCubYg.cG_Js2Ge_imwjLupmNA_Rd9HrMA');
+client.login('');
