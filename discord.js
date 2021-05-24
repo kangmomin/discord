@@ -174,6 +174,12 @@ client.on('message', async (msg) => {
                         })
                         .catch(err => console.error('오류 발생', err))
                 }
+            } else if(msg.content.includes('$자가진단 해제')) {
+                let users = JSON.parse(fs.readFileSync(__dirname + "/userInfo/index.json", "utf8").toString())
+                let name = msg.content.slice(9).toString() || null
+                if(name === null) return msg.channel.send("$자가진단 해제 '이름'")
+                delete users[name]
+                fs.writeFileSync(__dirname + "/userInfo/index.json", JSON.stringify(users), "utf8")
             } else if (msg.content.includes('$반복')) {
                 if (msg.mentions.members.first().id != '' && msg.mentions.members.first().id != undefined) {
                     let mention = `<@${msg.mentions.members.first().id}>`
