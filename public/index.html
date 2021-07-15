@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <title>자가진단 등록하기</title>
+</head>
+<body>
+    <input type="text" id="name" name="name" placeholder="홍길동" /> <br />
+    <input type="text" id="pwd" name="pwd" placeholder="password" /> <br />
+    <input type="text" id="birthday" name="birthday" placeholder="생일" /> <br />
+    <input type="text" id="area" name="area" placeholder="area" value="부산" /> <br />
+    <input type="text" id="school" name="school" placeholder="school" value="부산컴퓨터과학고등학교" /> <br />
+    <input type="submit" onclick="send()">
+
+    <script>
+        function send() {
+            const name = document.querySelector("#name").value || null,
+                pwd = document.querySelector("#pwd").value || null,
+                birthday = document.querySelector("#birthday").value || null,
+                area = document.querySelector("#area").value || null,
+                school = document.querySelector("#school").value || null
+
+                if(
+                    name === null ||
+                    pwd === null ||
+                    birthday === null ||
+                    area === null ||
+                    school === null
+                ) return alert("모든 칸을 기입해주세요.")
+    
+                $.ajax({
+                    url : "/addUser_process",
+                    type : "post",
+                    data : {
+                        name : name,
+                        pwd : pwd,
+                        birthday : birthday,
+                        area : area,
+                        school : school
+                    },
+                    success : (result) => {
+                        if(result === 'null') return alert("모든 칸을 기입해주세요.")
+                        if(result === 'err') return alert("에러 발생")
+                        alert(`
+                        성공적으로 기입되었습니다. \n
+                        디스코드로 가서 "$계정등록 ${result} PASSWORD 본인 멘션" 순으로 입력해주십시오. \n
+                        디스코드를 등록해야 정보 수정이 가능합니다.
+                        ID = ${result}
+                        `)
+                    }
+                })
+        }
+    </script>
+</body>
+</html>
