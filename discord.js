@@ -92,7 +92,57 @@ client.on('message', async (msg) => {
     else if (msg.content === '$rebooting bot') a = b
     else if (msg.content.includes('$계정등록')) addAcount()
     else if (msg.content.includes('$급식')) sm.main(msg)
+    else if (msg.content.includes("$학교 검색")) return
+    else if (msg.content.includes('$p') || msg.content.includes('$pr')) player()
+    else if (msg.content.includes('$stop')) msg.member.voice.channel.leave()
+    // else if (msg.content.startsWith('$s')) 
     else if (msg.content.includes('$')) mention()
+
+    function showCart(carts) {
+        let content = "카테고리를 적어주십시오.\n"
+        for (cart of carts) {
+            content += `${cart}\n`
+        }
+        msg.channel.send(content).then((botMsg) => {
+            setTimeout(() => {
+                botMsg.delete()
+                msg.delete()
+            }, 10000);
+        })
+    }
+
+    async function player() {
+        const carts = fs.readdirSync('F:/song')
+        const cart = msg.content.trim().split(' ')
+        if (
+            cart.length != 2 ||
+            cart[1] == ' ' || 
+            !carts.includes(cart[1])
+            ) return showCart(carts)
+        const channel = msg.member.voice.channel
+        const songs = fs.readdirSync(`f:/song/${cart[1]}`)
+        const conn = await channel.join()
+        let botMsg = await msg.channel.send("the song will be start...")
+        for (let i = 0; i < songs.length; i++) {
+            if (msg.content.includes('pr')) {
+                i = Math.floor(Math.random() * songs.length)
+            }
+            const songFile = conn.play(`F:/song/${cart[1]}/${songs[i]}`)
+            botMsg.edit(songs[i])
+            await playSong(songFile).catch((err) => console.log(err))
+            if (msg.content.includes('pr')) i--
+        }
+        msg.delete()
+        botMsg.delete()
+        msg.member.voice.channel.leave()
+    }
+
+    async function playSong(song) {
+        return new Promise((resolve, reject) => {
+            song.on('error', (err) => reject(err))
+            song.on("finish", () => resolve())
+        })
+    }
 
     function startSelfCheck() {
         let date = new Date()
@@ -191,7 +241,7 @@ client.on('uncaughtException', err => {
     })
 })
 
-client.login('ODExMTc5MDc2NTk2NjYyMjgy.YCubYg.7ZhXJ1pqkhRb3Uaw_vmgz5fsKn4');
+client.login('ODExMTc5MDc2NTk2NjYyMjgy.YCubYg.4OInElB2HV447OzEHBY_2fbN9ow');
 
 async function printBirthday() {
     const today = getToday()
